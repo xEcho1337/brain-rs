@@ -12,7 +12,7 @@ impl EluActivation {
 
 impl Activation for EluActivation {
     fn activate(input: f64) -> f64 {
-        if input > 0. {
+        if input > 0.0 {
             input
         } else {
             Self.alpha * (input.exp() - 1.)

@@ -1,10 +1,12 @@
-use crate::layer::Layer;
+mod adam;
+
+use crate::layer::{DenseLayer, Layer};
 use crate::structure::{Neuron, Synapse};
 
 const GRADIENT_CLIP: f64 = 5.;
 
 pub trait Optimizer {
-    fn new(learning_rate: f64) -> Self where Self: Sized;
+    fn new(learning_rate: f64) -> Self;
 
     fn post_initialize(&mut self) {}
 
@@ -14,20 +16,20 @@ pub trait Optimizer {
 
     fn update(&mut self, synapse: &mut Synapse);
 
-    fn post_iteration(&mut self, layers: &[Layer]);
+    fn post_iteration(&mut self, layers: &[DenseLayer]);
 
-    fn post_fit(&mut self, layers: &[Layer]) {}
+    fn post_fit(&mut self, layers: &[DenseLayer]) {}
 
-    fn apply_gradient_step(&mut self, layer: &Layer, neuron: &mut Neuron, synapse: &mut Synapse) {
+    fn apply_gradient_step(&mut self, layer: &DenseLayer, neuron: &mut Neuron, synapse: &mut Synapse) {
         let output = neuron.get_value();
 
-        let error = Self::clip_gradient(synapse.get_weight() * synapse.get_output_neuron().get_delta());
-        let delta = Self::clip_gradient(error * layer.get_activation().get_function().get_derivative(output));
+        let error = Self::clip_gradient(synapse.weight * synapse.output_neuron.delta);
+        let delta = Self::clip_gradient(error * layer.activation.get_function().get_derivative(output)); // TODO
 
-        let weight_change = Self::clip_gradient(delta * synapse.get_input_neuron().get_value());
+        let weight_change = Self::clip_gradient(delta * synapse.input_neuron.value);
 
-        neuron.set_delta(delta);
-        synapse.set_weight(synapse.get_weight() + weight_change);
+        neuron.delta = delta;
+        synapse.weight += weight_change;
     }
 
     fn clip_gradient(gradient: f64) -> f64 {

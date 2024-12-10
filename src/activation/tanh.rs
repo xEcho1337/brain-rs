@@ -10,6 +10,6 @@ impl Activation for TanhActivation {
     }
 
     fn get_derivative(input: f64) -> f64 {
-        1. - input.tanh().powi(2)
+        1.0 - input.tanh().powi(2)
     }
 }

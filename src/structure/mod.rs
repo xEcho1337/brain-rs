@@ -11,5 +11,6 @@ pub struct Neuron {
 pub struct Synapse {
     pub input_neuron: Neuron,
     pub output_neuron: Neuron,
+    pub id: usize,
     pub weight: f64
 }
