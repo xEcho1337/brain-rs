@@ -1,25 +1,26 @@
 use crate::activation::Activation;
 
+#[derive(Default)]
 pub struct EluActivation {
     alpha: f64,
 }
 
 impl EluActivation {
-    fn new(&self, alpha: f64) -> self {
-        self { alpha }
+    fn new(&self, alpha: f64) -> Self {
+        Self { alpha }
     }
 }
 
 impl Activation for EluActivation {
-    fn activate(input: f64) -> f64 {
+    fn activate(&self, input: f64) -> f64 {
         if input > 0.0 {
             input
         } else {
-            Self.alpha * (input.exp() - 1.)
+            Self.alpha * (input.exp() - 1.0)
         }
     }
 
-    fn get_derivative(input: f64) -> f64 {
+    fn get_derivative(&self, input: f64) -> f64 {
         todo!()
     }
 }

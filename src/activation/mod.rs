@@ -1,41 +1,43 @@
-use crate::structure::Neuron;
 use rayon::iter::IntoParallelRefIterator;
 
-mod relu;
-mod linear;
-mod sigmoid;
-mod softmax;
-mod tanh;
-mod elu;
+use crate::structure::Neuron;
 
+pub mod elu;
+pub mod linear;
+pub mod relu;
+pub mod sigmoid;
+pub mod softmax;
+pub mod tanh;
+
+/*
 pub enum Activations {
-    Linear,
-    Elu,
-    ReLU,
-    Sigmoid,
-    Softmax,
-    Tanh,
+    EluActivation(EluActivation),
+    Linear(LinearActivation),
+    ReLU(ReLUActivation),
+    Sigmoid(SigmoidActivation),
+    Softmax(SoftmaxActivation),
+    Tanh(TanhActivation),
 }
+*/
 
 pub trait Activation {
-    fn activate(input: f64) -> f64;
+    fn activate(&self, input: f64) -> f64 where Self: Sized;
 
-    fn get_derivative(input: f64) -> f64;
+    fn get_derivative(&self, input: f64) -> f64 where Self: Sized;
 
-    fn activate_from_inputs(input: Vec<f64>) -> Vec<f64> {
-        input.par_iter()
+    fn activate_from_inputs(&self, input: Vec<f64>) -> Vec<f64> {
+        input
+            .par_iter()
             .map(|value| {
-                Self::activate(value);
+                self.activate(value);
             })
-            .collect();
+            .collect()
     }
 
-    fn apply(neurons: Vec<Neuron>) {
-        let _ = neurons
-            .par_iter()
-            .for_each(|neuron: &mut Neuron| {
-                let output = Self::activate(neuron.value + neuron.bias);
-                neuron.value = output;
-            });
+    fn apply(&self, neurons: Vec<Neuron>) {
+        let _ = neurons.par_iter().for_each(|neuron: &mut Neuron| {
+            let output = self.activate(neuron.value + neuron.bias);
+            neuron.value = output;
+        });
     }
 }

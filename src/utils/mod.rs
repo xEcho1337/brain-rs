@@ -1,5 +1,6 @@
 use std::fmt::Display;
-use rand::Rng;
+
+use rand::{Rng, rng};
 
 #[derive(Clone, Debug)]
 pub struct Vector {
@@ -24,7 +25,7 @@ impl Vector {
     }
 
     pub fn random(size: usize) -> Self {
-        let mut rng = thread_rng();
+        let mut rng = rng();
         Self {
             data: (0..size).map(|_| rng.gen()).collect(),
         }
@@ -118,11 +119,7 @@ impl Vector {
     }
 
     pub fn variance_with_mean(&self, mean: f64) -> f64 {
-        self.data
-            .iter()
-            .map(|&x| (x - mean).powi(2))
-            .sum::<f64>()
-            / self.data.len() as f64
+        self.data.iter().map(|&x| (x - mean).powi(2)).sum::<f64>() / self.data.len() as f64
     }
 
     pub fn variance(&self) -> f64 {

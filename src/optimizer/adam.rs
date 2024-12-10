@@ -1,20 +1,8 @@
+use crate::optimizer::{Adam, Optimizer};
 use crate::structure::Synapse;
-use crate::optimizer::Optimizer;
-
-pub struct Adam {
-    learning_rate: f64,
-    beta1: f64,
-    beta2: f64,
-    epsilon: f64,
-    first_momentum: Vec<f64>,
-    second_momentum: Vec<f64>,
-    beta1_timestep: f64,
-    beta2_timestep: f64,
-    timestep: usize,
-}
 
 impl Optimizer for Adam {
-    fn new(learning_rate: f64) -> Self {
+    fn new(&self, learning_rate: f64) -> Self {
         Self {
             learning_rate,
             beta1: 0.9,
