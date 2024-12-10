@@ -1,5 +1,4 @@
 use crate::activation::Activation;
-use crate::structure::Neuron;
 use rayon::iter::IntoParallelRefIterator;
 
 pub struct SoftmaxActivation {

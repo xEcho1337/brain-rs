@@ -1,3 +1,6 @@
+mod neuron;
+mod synapse;
+
 pub struct Neuron {
     pub synapses: Vec<Synapse>,
     pub delta: f64,

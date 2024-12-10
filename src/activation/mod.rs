@@ -1,5 +1,7 @@
 use crate::structure::Neuron;
 use rayon::iter::IntoParallelRefIterator;
+use crate::activation::Activations::ReLUActivation;
+use crate::activation::relu::ReLUActivation;
 
 mod relu;
 mod linear;
@@ -9,7 +11,12 @@ mod tanh;
 mod elu;
 
 pub enum Activations {
-    ReLUActivation {}
+    Linear,
+    Elu,
+    ReLU,
+    Sigmoid,
+    Softmax,
+    Tanh,
 }
 
 pub trait Activation {
