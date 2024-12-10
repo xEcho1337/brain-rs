@@ -29,7 +29,8 @@ impl Optimizer for Adam {
     }
 
     fn post_initialize(&mut self) {
-        let capacity: usize = 1000;
+        let capacity: usize = Synapse::get_total_synapses();
+
         self.first_momentum = vec![0.0; capacity];
         self.second_momentum = vec![0.0; capacity];
     }
@@ -45,12 +46,6 @@ impl Optimizer for Adam {
     fn update(&mut self, synapse: &mut Synapse) {
         let gradient = synapse.output_neuron.delta * synapse.input_neuron.value;
         let synapse_id = synapse.id;
-
-        // TODO: Remove this unnecessary piece
-        if synapse_id >= self.first_momentum.len() {
-            self.first_momentum.resize(synapse_id + 1, 0.0);
-            self.second_momentum.resize(synapse_id + 1, 0.0);
-        }
 
         let current_first_momentum: f64 = self.first_momentum[synapse_id];
         let current_second_momentum: f64 = self.second_momentum[synapse_id];
