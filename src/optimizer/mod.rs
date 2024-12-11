@@ -19,8 +19,8 @@ pub struct Adam {
     timestep: usize,
 }
 
-pub trait Optimizer {
-    fn new(&self, learning_rate: f64) -> Self;
+pub trait Optimizer: Any {
+    fn new(learning_rate: f64) -> Self;
 
     fn post_initialize(&mut self) {}
 

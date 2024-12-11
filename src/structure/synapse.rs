@@ -13,7 +13,7 @@ impl Synapse {
             input_neuron,
             output_neuron,
             id,
-            weight: (random() * 2 * bound) - bound
+            weight: (random::<f64>() * 2. * bound) - bound
         }
     }
 

@@ -9,5 +9,5 @@ pub struct Model {
     layers: Vec<dyn Layer>,
     init_technique: Option<WeightInitialization>,
     loss_functions: Option<LossFunctions>,
-    optimizer: Option<impl Optimizer>
+    optimizer: Option<dyn Optimizer>
 }

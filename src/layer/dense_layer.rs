@@ -31,7 +31,7 @@ impl Layer for DenseLayer {
         self
     }
 
-    fn apply_function(&self, previous: Box<dyn Layer>) {
+    fn apply_function(&self, previous: impl Layer) {
 
     }
 }

@@ -2,7 +2,7 @@ use crate::optimizer::{Adam, Optimizer};
 use crate::structure::Synapse;
 
 impl Optimizer for Adam {
-    fn new(&self, learning_rate: f64) -> Self {
+    fn new(learning_rate: f64) -> Self {
         Self {
             learning_rate,
             beta1: 0.9,

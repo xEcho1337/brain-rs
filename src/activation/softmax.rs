@@ -44,7 +44,7 @@ impl Activation for SoftmaxActivation {
             .map(|neuron| neuron.value + neuron.bias)
             .collect_into_vec(&values);
 
-        let activated_values = Self::activate_from_inputs(values);
+        let activated_values = self.activate_from_inputs(values);
 
         neurons
             .par_iter()
