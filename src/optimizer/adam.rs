@@ -2,7 +2,10 @@ use crate::optimizer::{Adam, Optimizer};
 use crate::structure::Synapse;
 
 impl Optimizer for Adam {
-    fn new(learning_rate: f64) -> Self {
+    fn new(learning_rate: f64) -> Self
+    where
+        Self: Sized,
+    {
         Self {
             learning_rate,
             beta1: 0.9,
@@ -23,7 +26,7 @@ impl Optimizer for Adam {
         self.second_momentum = vec![0.0; capacity];
     }
 
-    fn get_learning_rate(&self) -> f64 {
+    fn get_learning_rate(&mut self) -> f64 {
         self.learning_rate
     }
 

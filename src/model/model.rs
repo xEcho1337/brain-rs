@@ -1,5 +1,3 @@
-use std::ptr::null;
-
 use crate::initialization::WeightInitialization;
 use crate::layer::{DenseLayer, Layer};
 use crate::loss::LossFunctions;
@@ -7,7 +5,7 @@ use crate::model::Model;
 use crate::optimizer::Optimizer;
 use crate::utils::Vector;
 
-impl Model {
+impl Model<'_> {
     pub fn new(layers: Vec<impl Layer>) -> Self {
         Self {
             layers,
@@ -20,11 +18,11 @@ impl Model {
     pub fn compile(&mut self, init_technique: WeightInitialization, loss_functions: LossFunctions, optimizer: impl Optimizer) {
         self.init_technique = Some(init_technique);
         self.loss_functions = Some(loss_functions);
-        self.optimizer = Some(optimizer);
+        self.optimizer = Some(&optimizer);
     }
 
     pub fn predict(self, input: Vector) -> Vector {
-        if self.layers == null() || self.layers.len() == 0 {
+        if self.layers.len() == 0 {
             panic!("Model has not been compiled yet.");
         }
 
@@ -36,12 +34,14 @@ impl Model {
             }
 
             for layer in self.layers.iter() {
-                for mut neuron in layer.neurons {
+                for mut neuron in layer.get_neurons() {
                     neuron.value = 0.0;
                 }
             }
         } else {
             panic!("First layer is not a dense layer.");
         }
+
+        Vector::of(&[0.0f64; 1])
     }
 }

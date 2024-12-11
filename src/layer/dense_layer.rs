@@ -21,17 +21,14 @@ impl DenseLayer {
 }
 
 impl Layer for DenseLayer {
-    /*
     fn get_neurons(&self) -> Vec<Neuron> {
-        self.neurons
+        self.neurons.clone()
     }
-    */
 
     fn as_any(&self) -> &dyn Any {
         self
     }
 
-    fn apply_function(&self, previous: impl Layer) {
-
+    fn apply_function(&self, previous: &dyn Layer) {
     }
 }

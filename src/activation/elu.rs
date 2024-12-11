@@ -16,7 +16,7 @@ impl Activation for EluActivation {
         if input > 0.0 {
             input
         } else {
-            Self.alpha * (input.exp() - 1.0)
+            self.alpha * (input.exp() - 1.0)
         }
     }
 

@@ -1,6 +1,7 @@
 mod neuron;
 mod synapse;
 
+#[derive(Clone)]
 pub struct Neuron {
     pub synapses: Vec<Synapse>,
     pub delta: f64,

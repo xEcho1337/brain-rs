@@ -5,9 +5,9 @@ use crate::optimizer::Optimizer;
 
 mod model;
 
-pub struct Model {
-    layers: Vec<dyn Layer>,
-    init_technique: Option<WeightInitialization>,
-    loss_functions: Option<LossFunctions>,
-    optimizer: Option<dyn Optimizer>
+pub struct Model<'a> {
+    pub layers: Vec<&'a dyn Layer>,
+    pub init_technique: Option<WeightInitialization>,
+    pub loss_functions: Option<LossFunctions>,
+    pub optimizer: Option<&'a dyn Optimizer>
 }
